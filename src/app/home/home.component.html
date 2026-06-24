@@ -1,1 +1,465 @@
-<p>home works!</p>
+<!-- ================================================================
+     NAVBAR
+     ================================================================ -->
+<nav class="navbar" [class.scrolled]="isScrolled">
+  <div class="nav-inner">
+    <div class="nav-logo">
+      <svg width="36" height="36" viewBox="0 0 60 60" fill="none">
+        <circle cx="30" cy="30" r="22" fill="#7db31a" opacity=".15"/>
+        <circle cx="30" cy="30" r="16" fill="#7db31a"/>
+        <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="16" font-weight="900" font-family="Arial">D</text>
+      </svg>
+      <div class="logo-text">
+        <span class="logo-name">DESIDERATTO</span>
+        <span class="logo-tag">COFFEE · PERÚ</span>
+      </div>
+    </div>
+
+    <div class="nav-links">
+      <a (click)="scrollToSection('cafe')">Café</a>
+      <a (click)="scrollToSection('miel')">Miel</a>
+      <a (click)="scrollToSection('contacto')">Contacto</a>
+    </div>
+
+    <div class="nav-actions">
+      <button class="nav-btn" (click)="scrollToSection('contacto')">Pedir ahora</button>
+      <button class="hamburger" (click)="toggleMenu()" [class.open]="menuOpen">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" [class.open]="menuOpen">
+    <a (click)="scrollToSection('cafe')">☕ Café</a>
+    <a (click)="scrollToSection('miel')">🍯 Miel de Abeja</a>
+    <a (click)="scrollToSection('contacto')">📦 Cómo pedir</a>
+    <button class="nav-btn nav-btn-full" (click)="scrollToSection('contacto')">Pedir ahora →</button>
+  </div>
+  <div class="menu-backdrop" [class.open]="menuOpen" (click)="closeMenu()"></div>
+</nav>
+
+<!-- ================================================================
+     HERO
+     ================================================================ -->
+<section class="hero" id="inicio">
+  <div class="hero-bg">
+    <img src="/img/hero-bg.jpg" alt="" aria-hidden="true">
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content" [class.in]="heroTextVisible">
+    <!-- Copy -->
+    <div class="hero-copy">
+      <div class="hero-pill">
+        <span class="hero-pill-dot"></span>
+        🇵🇪 &nbsp;Chanchamayo, Junín — Perú
+      </div>
+
+      <h1 class="hero-h1">
+        El café que<br>
+        <em>despierta</em><br>
+        tu día
+      </h1>
+
+      <p class="hero-desc">
+        Granos arábica a 1800m de altitud.<br>
+        Tostión media artesanal, directo del campo a tu taza.
+      </p>
+
+      <div class="hero-ctas">
+        <button class="cta-primary" (click)="scrollToSection('cafe')">
+          Ver productos
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </button>
+        <div class="hero-trust">
+          <div class="stars-row">
+            <svg *ngFor="let s of [1,2,3,4,5]" width="13" height="13" viewBox="0 0 24 24" fill="#f5a520">
+              <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/>
+            </svg>
+          </div>
+          <span>+500 clientes satisfechos</span>
+        </div>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hstat"><strong>1800m</strong><span>Altitud</span></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><strong>100%</strong><span>Orgánico</span></div>
+        <div class="hstat-div"></div>
+        <div class="hstat"><strong>Arábica</strong><span>Variedad</span></div>
+      </div>
+    </div>
+
+    <!-- Productos flotantes -->
+    <div class="hero-stage"
+         (mousemove)="onHeroMouseMove($event)"
+         (mouseleave)="onHeroMouseLeave()">
+
+      <!-- 250g -->
+      <div class="stage-wrap sw-a">
+        <div class="stage-card sc-green"
+             [style.transform]="'translate('+heroMouseX*-38+'px,'+heroMouseY*-22+'px) rotateY('+heroMouseX*13+'deg) rotateX('+(-heroMouseY*7)+'deg)'">
+          <div class="sc-glow gc-green"></div>
+          <img src="/img/product-250.jpg" alt="Café 250g">
+          <span class="sc-tag">250g · S/.25</span>
+        </div>
+      </div>
+
+      <!-- 450g — protagonista -->
+      <div class="stage-wrap sw-b">
+        <div class="stage-card sc-green sc-star"
+             [style.transform]="'translate('+heroMouseX*-14+'px,'+heroMouseY*-9+'px) rotateY('+heroMouseX*5+'deg) rotateX('+(-heroMouseY*3)+'deg)'">
+          <div class="sc-glow gc-green"></div>
+          <img src="/img/product-450.jpg" alt="Café 450g">
+          <div class="sc-crown">⭐ MÁS VENDIDO</div>
+          <span class="sc-tag">450g · S/.42</span>
+        </div>
+      </div>
+
+      <!-- Miel -->
+      <div class="stage-wrap sw-c">
+        <div class="stage-card sc-gold"
+             [style.transform]="'translate('+heroMouseX*-26+'px,'+heroMouseY*-16+'px) rotateY('+heroMouseX*9+'deg) rotateX('+(-heroMouseY*5)+'deg)'">
+          <div class="sc-glow gc-gold"></div>
+          <img src="/img/honey.jpg" alt="Miel 500ml">
+          <span class="sc-tag sc-tag-gold">🍯 500ml · S/.35</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <button class="scroll-hint" (click)="scrollToSection('cafe')">
+    <div class="sh-mouse"><div class="sh-dot"></div></div>
+    <span>scroll</span>
+  </button>
+</section>
+
+<!-- ================================================================
+     TICKER
+     ================================================================ -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span *ngFor="let item of tickerItems">{{ item }}&nbsp;<em>✦</em>&nbsp;</span>
+    <span *ngFor="let item of tickerItems">{{ item }}&nbsp;<em>✦</em>&nbsp;</span>
+  </div>
+</div>
+
+<!-- ================================================================
+     APARTADO 1 — CAFÉ
+     ================================================================ -->
+<section class="s-cafe" id="cafe">
+
+  <!-- Banner intro -->
+  <div class="cafe-banner">
+    <div class="cafe-banner-bg">
+      <img src="/img/coffee-bg.jpg" alt="" aria-hidden="true">
+      <div class="cb-overlay"></div>
+    </div>
+    <div class="container cb-body anim">
+      <p class="eyebrow eyebrow-light">NUESTRO CAFÉ</p>
+      <h2 class="banner-title">Del grano a tu taza,<br><span class="hl-green">con alma peruana</span></h2>
+      <p class="banner-sub">Seleccionamos los mejores granos arábica de las montañas de Chanchamayo, a 1800 metros de altitud. Tostión media artesanal que preserva cada nota floral y el cuerpo equilibrado que nos identifica.</p>
+      <div class="banner-facts">
+        <div class="bfact"><span>1800m</span><em>Altitud</em></div>
+        <div class="bsep">·</div>
+        <div class="bfact"><span>Arábica</span><em>Variedad</em></div>
+        <div class="bsep">·</div>
+        <div class="bfact"><span>Media</span><em>Tostión</em></div>
+        <div class="bsep">·</div>
+        <div class="bfact"><span>🇵🇪</span><em>Origen</em></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tarjetas de producto -->
+  <div class="cafe-cards-section">
+    <div class="container">
+      <div class="cafe-cards-grid">
+
+        <!-- 450g -->
+        <div class="pcard anim">
+          <div class="pcard-img">
+            <img src="/img/product-450.jpg" alt="Café Tradicional 450g">
+            <div class="pcard-badge pcard-badge-green">⭐ MÁS POPULAR</div>
+            <div class="pcard-img-glow"></div>
+          </div>
+          <div class="pcard-body">
+            <p class="pcard-eye">CAFÉ MOLIDO ARTESANAL</p>
+            <h3 class="pcard-title">Café Tradicional<br><strong>450g</strong></h3>
+            <p class="pcard-desc">Formato familiar para el amante del café de cada día. Notas florales, toque de chocolate y cuerpo equilibrado del corazón de Chanchamayo.</p>
+            <div class="pcard-chips">
+              <span>🌿 Orgánico</span>
+              <span>🔥 Tostión media</span>
+              <span>🏔️ 1800m</span>
+              <span>☕ Molienda fina</span>
+            </div>
+            <div class="pcard-footer">
+              <div class="pcard-price-wrap">
+                <span class="pcard-price">S/. 42</span>
+                <span class="pcard-unit">/ 450g</span>
+              </div>
+              <button class="btn-g" (click)="scrollToSection('contacto')">
+                Pedir ahora
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 250g -->
+        <div class="pcard anim">
+          <div class="pcard-img">
+            <img src="/img/product-250.jpg" alt="Café Tradicional 250g">
+            <div class="pcard-badge pcard-badge-dim">🎁 IDEAL PARA REGALO</div>
+            <div class="pcard-img-glow"></div>
+          </div>
+          <div class="pcard-body">
+            <p class="pcard-eye">CAFÉ MOLIDO ARTESANAL</p>
+            <h3 class="pcard-title">Café Tradicional<br><strong>250g</strong></h3>
+            <p class="pcard-desc">El formato perfecto para probar y enamorarte. Cada bolsa concentra lo mejor de Chanchamayo, ideal para el hogar o para regalar.</p>
+            <div class="pcard-chips">
+              <span>🌸 Notas florales</span>
+              <span>🍫 Chocolate</span>
+              <span>✅ Sin conservantes</span>
+              <span>🎁 Regalo ideal</span>
+            </div>
+            <div class="pcard-footer">
+              <div class="pcard-price-wrap">
+                <span class="pcard-price">S/. 25</span>
+                <span class="pcard-unit">/ 250g</span>
+              </div>
+              <button class="btn-g" (click)="scrollToSection('contacto')">
+                Pedir ahora
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================================================================
+     APARTADO 2 — MIEL
+     ================================================================ -->
+<section class="s-miel" id="miel">
+
+  <!-- Banner dorado -->
+  <div class="miel-banner">
+    <div class="miel-banner-glow"></div>
+    <div class="container anim" style="text-align:center; position:relative; z-index:2">
+      <p class="eyebrow eyebrow-gold">MIEL DE ABEJA PREMIUM</p>
+      <h2 class="banner-title">La dulzura que la<br><span class="hl-gold">naturaleza perfeccionó</span></h2>
+      <p class="banner-sub" style="max-width:540px; margin: 0 auto">Orgánica · Artesanal · Sin procesar · Directamente del panal a tu mesa</p>
+    </div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="miel-body">
+    <div class="container miel-grid">
+
+      <!-- Visual -->
+      <div class="miel-visual anim-left">
+        <div class="miel-jar-wrap">
+          <div class="miel-drip md1"></div>
+          <div class="miel-drip md2"></div>
+          <div class="miel-drip md3"></div>
+          <div class="miel-jar">
+            <img src="/img/honey.jpg" alt="Miel de Abeja Artesanal 500ml">
+          </div>
+          <div class="miel-price-tag">
+            <em>PRECIO</em>
+            <strong>S/. 35</strong>
+            <span>500 ml</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Info -->
+      <div class="miel-info anim-right">
+        <p class="eyebrow eyebrow-gold">MIEL ORGÁNICA ARTESANAL</p>
+        <h3 class="miel-title">Directamente del panal<br><span class="hl-gold">a tu mesa</span></h3>
+
+        <p class="miel-desc">Nuestra Miel de Abeja es cosechada artesanalmente por apicultores comprometidos con las técnicas tradicionales. Sin pasteurizar, sin filtrar, sin conservantes.</p>
+        <p class="miel-desc"><strong style="color:#f5a520">Pura, cruda y llena de nutrientes naturales.</strong> El complemento perfecto para tu taza de Café Desideratto.</p>
+
+        <div class="miel-perks">
+          <div class="mperk" *ngFor="let p of honeyPerks">
+            <div class="mperk-ic">{{ p.icon }}</div>
+            <div>
+              <strong>{{ p.title }}</strong>
+              <span>{{ p.desc }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="miel-combo">
+          <span class="combo-em">☕ + 🍯</span>
+          <div>
+            <strong>Combo recomendado</strong>
+            <span>Café 250g + Miel 500ml — la experiencia Desideratto completa</span>
+          </div>
+        </div>
+
+        <div class="miel-cta-row">
+          <div class="miel-price">
+            <strong>S/. 35</strong><span>/ 500ml</span>
+          </div>
+          <button class="btn-gold-solid" (click)="scrollToSection('contacto')">
+            Pedir mi miel
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================================================================
+     APARTADO 3 — CONTACTO
+     ================================================================ -->
+<section class="s-contacto" id="contacto">
+  <div class="contacto-bg">
+    <img src="/img/hero-bg-2.jpg" alt="" aria-hidden="true">
+    <div class="contacto-overlay"></div>
+  </div>
+
+  <div class="container contacto-inner">
+
+    <!-- Header -->
+    <div class="contacto-head anim">
+      <p class="eyebrow eyebrow-light">CÓMO PEDIR</p>
+      <h2 class="banner-title">Listo para pedirlo<br><span class="hl-green">¡Es muy fácil!</span></h2>
+      <p class="banner-sub">Elige el canal que prefieras. Respondemos al instante y enviamos a todo el Perú.</p>
+    </div>
+
+    <!-- Canales -->
+    <div class="canales anim">
+
+      <a href="https://wa.me/51XXXXXXXXX" target="_blank" class="canal canal-wsp">
+        <div class="canal-ic">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </div>
+        <div class="canal-body">
+          <em>Más rápido</em>
+          <strong>WhatsApp</strong>
+          <span>Escríbenos y te respondemos al instante.</span>
+        </div>
+        <div class="canal-arrow">→</div>
+      </a>
+
+      <a href="https://instagram.com/desiderattocoffee" target="_blank" class="canal canal-ig">
+        <div class="canal-ic">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        </div>
+        <div class="canal-body">
+          <em>Síguenos</em>
+          <strong>Instagram</strong>
+          <span>Novedades y pedidos por DM.</span>
+        </div>
+        <div class="canal-arrow">→</div>
+      </a>
+
+      <a href="mailto:hola@desiderattocoffee.pe" class="canal canal-email">
+        <div class="canal-ic">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+        </div>
+        <div class="canal-body">
+          <em>Mayoristas</em>
+          <strong>Email</strong>
+          <span>Pedidos al por mayor y empresas.</span>
+        </div>
+        <div class="canal-arrow">→</div>
+      </a>
+
+    </div>
+
+    <!-- Precios + Garantías -->
+    <div class="contacto-bottom anim">
+
+      <div class="price-box">
+        <h4>Nuestros productos</h4>
+        <div class="price-rows">
+          <div class="price-row">
+            <span>☕ Café Tradicional 250g</span>
+            <strong>S/. 25</strong>
+          </div>
+          <div class="price-row">
+            <span>☕ Café Tradicional 450g</span>
+            <strong>S/. 42</strong>
+          </div>
+          <div class="price-row">
+            <span>🍯 Miel de Abeja 500ml</span>
+            <strong>S/. 35</strong>
+          </div>
+        </div>
+        <a href="https://wa.me/51XXXXXXXXX" target="_blank" class="wsp-btn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Pedir por WhatsApp
+        </a>
+      </div>
+
+      <div class="garantias">
+        <h4>Por qué elegirnos</h4>
+        <div class="garantia-list">
+          <div class="gitem">
+            <span>🚚</span>
+            <div><strong>Envíos a todo el Perú</strong><p>Coordinamos la entrega donde estés</p></div>
+          </div>
+          <div class="gitem">
+            <span>✅</span>
+            <div><strong>Calidad garantizada</strong><p>100% artesanal y orgánico</p></div>
+          </div>
+          <div class="gitem">
+            <span>⚡</span>
+            <div><strong>Respuesta inmediata</strong><p>Te atendemos al instante</p></div>
+          </div>
+          <div class="gitem">
+            <span>🇵🇪</span>
+            <div><strong>Producto peruano</strong><p>De Chanchamayo directo a ti</p></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ================================================================
+     FOOTER
+     ================================================================ -->
+<footer class="footer">
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <svg width="30" height="30" viewBox="0 0 60 60" fill="none">
+        <circle cx="30" cy="30" r="16" fill="#7db31a"/>
+        <text x="50%" y="57%" dominant-baseline="middle" text-anchor="middle" fill="#fff" font-size="16" font-weight="900" font-family="Arial">D</text>
+      </svg>
+      <div>
+        <strong>DESIDERATTO COFFEE</strong>
+        <span>Café artesanal · Miel orgánica · Perú 🇵🇪</span>
+      </div>
+    </div>
+
+    <div class="footer-nav">
+      <a (click)="scrollToSection('cafe')">Café</a>
+      <a (click)="scrollToSection('miel')">Miel</a>
+      <a (click)="scrollToSection('contacto')">Contacto</a>
+    </div>
+
+    <div class="footer-socials">
+      <a href="#" aria-label="Instagram" class="soc-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="#" aria-label="TikTok" class="soc-icon">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.16 8.16 0 004.77 1.52V6.76a4.85 4.85 0 01-1-.07z"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="footer-copy">© 2024 Desideratto Coffee · Hecho con ❤️ en Perú</div>
+</footer>
